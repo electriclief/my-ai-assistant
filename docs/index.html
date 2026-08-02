@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My AI Assistant - Electriclief</title>
+    
+    <!-- Golden Layout CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/golden-layout@2.6.1/dist/css/golden-layout.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/golden-layout@2.6.1/dist/css/themes/golden-layout-light.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1>🤖 My AI Assistant</h1>
+                <p class="subtitle">A decentralized, self-running digital companion</p>
+            </div>
+            <div class="header-controls">
+                <button id="theme-toggle" class="theme-btn">
+                    <span class="theme-icon">🌙</span>
+                    <span class="theme-label">Dark Mode</span>
+                </button>
+            </div>
+        </header>
+        
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Left Sidebar - Tree Menu -->
+            <aside class="sidebar-left">
+                <div class="tree-menu">
+                    <div class="tree-item" data-path="/">
+                        <span class="tree-icon">🏠</span>
+                        <span class="tree-label">Home</span>
+                    </div>
+                    <div class="tree-item" data-path="/sub-sites/kate-mc">
+                        <span class="tree-icon">🎤</span>
+                        <span class="tree-label">Kate McGill</span>
+                    </div>
+                    <div class="tree-item" data-path="/sub-sites/gpu-market">
+                        <span class="tree-icon">🖥️</span>
+                        <span class="tree-label">GPU Marketplace</span>
+                    </div>
+                    <div class="tree-item" data-path="/sub-sites/crypto">
+                        <span class="tree-icon">₿</span>
+                        <span class="tree-label">CryptoNote</span>
+                    </div>
+                    <div class="tree-item" data-path="/sub-sites/tools">
+                        <span class="tree-icon">🛠️</span>
+                        <span class="tree-label">Tools</span>
+                    </div>
+                </div>
+            </aside>
+            
+            <!-- Right Display Pane -->
+            <section class="display-pane" id="display-pane">
+                <div class="content-area">
+                    <h2>Welcome to My AI Assistant</h2>
+                    <p>This is a decentralized, self-running digital companion built with Golden Layout. The theme switcher in the header allows you to toggle between light and dark modes.</p>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-content">
+                <p>&copy; 2024 My AI Assistant by Electriclief. All rights reserved.</p>
+                <p class="footer-links">
+                    <a href="#">GitHub</a> | 
+                    <a href="#">Documentation</a> | 
+                    <a href="#">About</a>
+                </p>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Golden Layout JS -->
+    <script src="https://cdn.jsdelivr.net/npm/golden-layout@2.6.1/dist/js/golden-layout.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="js/app.js"></script>
+    <script src="js/theme-toggle.js"></script>
+    <script src="js/tree-menu.js"></script>
+</body>
+</html>
