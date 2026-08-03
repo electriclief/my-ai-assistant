@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jim — Motherboard Testing Shops (50 km of Wellandport)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070b14; --bg2:#0b1220; --panel:rgba(19,28,46,.72); --panel2:rgba(13,20,34,.9);
+  --bd:rgba(120,160,255,.14); --bd2:rgba(240,192,64,.35);
+  --tx:#e8edf7; --dim:#93a1bd; --dim2:#5f6f8c;
+  --blue:#40a0f0; --blue2:#7cc4ff; --gold:#f0c040; --gold2:#ffd97a; --green:#40f0a0;
+  --shadow:0 24px 70px rgba(0,0,0,.5);
+  --serif:"Cormorant Garamond",Georgia,serif; --sans:"Inter",system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(240,192,64,.3)}
+.orb{position:fixed;border-radius:50%;filter:blur(110px);z-index:0;pointer-events:none;opacity:.45}
+.orb.blue{width:50vw;height:50vw;background:radial-gradient(circle,rgba(64,160,240,.25),transparent 65%);top:-16vw;left:-12vw;animation:drift1 26s ease-in-out infinite}
+.orb.gold{width:40vw;height:40vw;background:radial-gradient(circle,rgba(240,192,64,.14),transparent 65%);bottom:-14vw;right:-8vw;animation:drift2 32s ease-in-out infinite}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(5vw,4vh) scale(1.1)}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-4vw,-4vh) scale(1.06)}}
+.wrap{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:0 24px}
+nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0}
+.brand{display:flex;align-items:center;gap:12px;font-weight:600;letter-spacing:.4px}
+.brand .mark{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:20px;background:linear-gradient(135deg,rgba(64,160,240,.22),rgba(240,192,64,.16));border:1px solid var(--bd)}
+.brand small{display:block;font-size:10.5px;letter-spacing:2.6px;color:var(--dim2);text-transform:uppercase;font-weight:500}
+.brand a{color:var(--tx);text-decoration:none}
+.backlink{font-size:13px;color:var(--blue2);text-decoration:none;border:1px solid var(--bd);padding:8px 16px;border-radius:100px;transition:all .25s}
+.backlink:hover{background:rgba(64,160,240,.12);border-color:rgba(124,196,255,.4)}
+.hero{padding:56px 0 30px;text-align:center}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;padding:7px 18px;border-radius:100px;background:rgba(240,192,64,.08);border:1px solid rgba(240,192,64,.28);color:var(--gold);font-size:11.5px;letter-spacing:2.8px;text-transform:uppercase;font-weight:600;margin-bottom:26px}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(34px,5.4vw,54px);line-height:1.08}
+.hero h1 .grad{background:linear-gradient(100deg,#fff 10%,var(--blue2) 45%,var(--gold) 90%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero .sub{max-width:660px;margin:18px auto 0;color:var(--dim);font-size:15.5px;font-weight:300}
+.hero .sub strong{color:var(--tx);font-weight:600}
+.stat-row{display:flex;gap:14px;justify-content:center;margin-top:30px;flex-wrap:wrap}
+.stat{background:var(--panel);border:1px solid var(--bd);border-radius:16px;padding:14px 26px;text-align:center;backdrop-filter:blur(10px)}
+.stat b{display:block;font-size:24px;font-family:var(--serif);color:var(--gold)}
+.stat span{font-size:10.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--dim2)}
+section{padding:58px 0}
+.sec-head{margin-bottom:34px}
+.sec-kicker{font-size:11px;letter-spacing:3.4px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:12px}
+.sec-head h2{font-family:var(--serif);font-weight:500;font-size:clamp(26px,3.8vw,36px)}
+.sec-head p{color:var(--dim);font-weight:300;font-size:14.5px;margin-top:8px;max-width:640px}
+.town-group{margin-bottom:40px}
+.town-head{display:flex;align-items:baseline;gap:14px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--bd)}
+.town-head h3{font-family:var(--serif);font-weight:500;font-size:24px}
+.town-head .dist{font-size:11.5px;letter-spacing:1.6px;text-transform:uppercase;color:var(--blue2);font-weight:600}
+.town-head .count{margin-left:auto;font-size:11px;color:var(--dim2);letter-spacing:1px}
+.shop{display:flex;gap:18px;align-items:flex-start;background:var(--panel);border:1px solid var(--bd);border-radius:18px;padding:20px 22px;margin-bottom:12px;backdrop-filter:blur(10px);transition:all .3s}
+.shop:hover{border-color:var(--bd2);transform:translateX(4px)}
+.shop .ico{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:20px;flex-shrink:0;background:linear-gradient(135deg,rgba(64,160,240,.16),rgba(240,192,64,.1));border:1px solid var(--bd)}
+.shop .body{flex:1;min-width:0}
+.shop h4{font-size:16px;font-weight:600;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.shop h4 .pill{font-size:9.5px;letter-spacing:1.4px;text-transform:uppercase;padding:3px 10px;border-radius:100px;font-weight:700}
+.pill.near{background:rgba(64,240,160,.1);color:var(--green);border:1px solid rgba(64,240,160,.3)}
+.pill.has-email{background:rgba(64,160,240,.1);color:var(--blue2);border:1px solid rgba(64,160,240,.3)}
+.shop .addr{font-size:12.5px;color:var(--dim2);margin-top:3px}
+.contacts{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.c-btn{display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:10px;font-size:12px;font-weight:600;text-decoration:none;transition:all .25s}
+.c-btn.tel{background:rgba(64,240,160,.08);border:1px solid rgba(64,240,160,.3);color:var(--green)}
+.c-btn.tel:hover{background:rgba(64,240,160,.18)}
+.c-btn.mail{background:rgba(64,160,240,.08);border:1px solid rgba(64,160,240,.3);color:var(--blue2)}
+.c-btn.mail:hover{background:rgba(64,160,240,.18)}
+.c-btn.web{background:rgba(240,192,64,.08);border:1px solid rgba(240,192,64,.3);color:var(--gold)}
+.c-btn.web:hover{background:rgba(240,192,64,.18)}
+.c-btn.none{background:rgba(140,150,180,.07);border:1px solid var(--bd);color:var(--dim);cursor:default}
+.notes{background:var(--panel);border:1px solid var(--bd);border-radius:18px;padding:24px 26px;margin-top:10px;backdrop-filter:blur(10px)}
+.notes h3{font-family:var(--serif);font-weight:500;font-size:20px;margin-bottom:12px;color:var(--gold)}
+.notes li{font-size:13.5px;color:var(--dim);margin:0 0 10px 18px;font-weight:300}
+.notes li strong{color:var(--tx)}
+.dl-band{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:34px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 26px;border-radius:13px;font-size:14px;font-weight:600;text-decoration:none;transition:all .28s;border:1px solid transparent}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#d99e1f);color:#14100a;box-shadow:0 12px 34px rgba(240,192,64,.25)}
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 18px 44px rgba(240,192,64,.38)}
+.btn-ghost{background:rgba(64,160,240,.07);border-color:var(--bd);color:var(--blue2)}
+.btn-ghost:hover{transform:translateY(-3px);background:rgba(64,160,240,.14)}
+footer{border-top:1px solid var(--bd);padding:30px 0 40px;text-align:center;position:relative;z-index:1}
+footer p{font-size:12.5px;color:var(--dim2);font-weight:300}
+footer .sig-line{font-family:var(--serif);font-style:italic;color:var(--dim);font-size:14px;margin-top:6px}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:640px){.shop{flex-direction:column}.stat-row{gap:8px}.stat{padding:10px 16px}}
+</style>
+</head>
+<body>
+<div class="orb blue"></div><div class="orb gold"></div>
+<div class="wrap">
+  <nav>
+    <div class="brand">
+      <div class="mark">🐋</div>
+      <div><a href="jim.html">Hermes<span style="color:var(--dim2);font-weight:400"> · For Jim</span></a>
+        <small>Task Result · Aug 3, 2026</small>
+      </div>
+    </div>
+    <a class="backlink" href="jim.html">← Back to your studio</a>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow reveal">✔ Task complete · motherboard testing</div>
+    <h1 class="reveal d1">Shops that will test your <span class="grad">motherboard</span></h1>
+    <p class="sub reveal d2">18 computer repair shops within <strong>50 km of Wellandport</strong> that can bench-test a motherboard and tell you whether it's good. Sorted closest first, with phones and emails. The full list is also available as a downloadable file below.</p>
+    <div class="stat-row reveal d3">
+      <div class="stat"><b>18</b><span>Shops found</span></div>
+      <div class="stat"><b>4</b><span>Towns &amp; areas</span></div>
+      <div class="stat"><b>8</b><span>Emails listed</span></div>
+      <div class="stat"><b>~18 km</b><span>Closest shop</span></div>
+    </div>
+  </header>
+
+  <section>
+    <div class="town-group reveal">
+      <div class="town-head"><h3>Welland</h3><span class="dist">~18–19 km · closest</span><span class="count">5 shops</span></div>
+
+      <div class="shop">
+        <div class="ico">💻</div>
+        <div class="body">
+          <h4>Millennium Computers <span class="pill near">Closest</span><span class="pill has-email">Email</span></h4>
+          <div class="addr">140 Thorold Rd, Welland ON</div>
+          <div class="contacts">
+            <a class="c-btn tel" href="tel:+19057344278">📞 (905) 734-4278</a>
+            <a class="c-btn mail" href="mailto:millcomp@live.com">✉️ millcomp@live.com</a>
+            <a class="c-btn web" href="http://www.millenniumcomputers.ca/" target="_blank">🌐 Website</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="shop">
+        <div class="ico">🖥️</div>
+        <div class="body">
+          <h4>Performance Computers <span class="pill has-email">Email</span></h4>
+          <div class="addr">289 Lincoln St, Welland ON</div>
+          <div class="contacts">
+            <a class="c-btn tel" href="tel:+19057320006">📞 (905) 732-0006</a>
+            <a class="c-btn mail" href="mailto:webmaster@performcpu.com">✉️ webmaster@performcpu.com</a>
+            <a class="c-btn web" href="https://www.performancecomputers.ca/" target="_blank">🌐 Website</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="shop">
+        <div class="ico">🔧</div>
+        <div class="body">
+          <h4>JTG Systems</h4>
+          <div class="addr">577 Niagara St, Welland ON</div>
+          <div class="contacts">
+            <a class="c-btn tel" href="tel:+19058924555">📞 (905) 892-4555</a>
+            <a class="c-btn web" href="https://jtgsystems.com/" target="_blank">🌐 Website</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="shop">
+        <div class="ico">🔌</div>
+        <div class="body">
+          <h4>ThrifTech</h4>
+          <div class="addr">577 Niagara St, Welland ON</div>
+          <div class="contacts">
+            <a class="c-btn tel" href="tel:+12899697854">📞 (289) 969-7854</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="shop">
+        <div class="ico">📺</div>
+        <div class="body">
+          <h4>Thomas TV Sales &amp; Service</h4>
+          <div class="addr">130 Thorold Rd, Welland ON · electronics &amp; board-level repair</div>
+          <div class="contacts">
+            <span class="c-btn none">Call ahead — walk-in only</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="town-group reveal">
+      <div class="town-head"><h3>St. Catharines</h3><span class="dist">~22–26 km</span><span class="count">4 shops</span></div>
+
+      <div class="shop">
+        <div class="ico">🏬</div>
+        <div class="body">
+          <h4>Canada Computers &amp; Electronics</h4>
+          <div class="addr">400 Scott St, St. Catharines ON · major chain, service counter</div>
+          <div class="contacts">
+            <a class="c-btn web" href="https://www.canadacomputers.com/" target="_blank">🌐 Website (store locator)</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="shop">
+        <div class="ico">💾</div>
+        <div class="body">
+          <h4>Wintronic Computers <span class="pill has-email">Email</span></h4>
+          <div class="addr">318 Ontario St, St. Catharines ON</div>
+          <div class="contacts">
+            <a class="c-btn tel" href="tel:+19056850666">📞 (905) 685-0666</a>
+            <a class="c-btn mail" href="mailto:welland@wintroniccomputers.com">✉️ welland@wintroniccomputers.com</a>
+            <a class="c-btn web" href="https://www.wintroniccomputers.com/" target="_blank">🌐 Website</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="shop">
+        <div class="ico">🔬</div>
+        <div class="body">
+          <h4>Nutech Electronics <span class="pill has-email">Email</span></h4>
+          <div class="addr">11E Neilson Ave, St. Catharines ON</div>
+          <div class="contacts">
+            <a class="c-btn tel" href="tel:+19056829200">📞 (905) 682-9200</a>
+            <a class="c-btn mail" href="mailto:salesniagara@nutechelectronics.com">✉️ salesniagara@nutechelectronics.com</a>
+            <a class="c-btn web" href="https://nutechelectronics.com/" target="_blank">🌐 Website</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="shop">
+        <div class="ico">🛠️</div>
+        <div class="body">
+          <h4>Mike's Computer Store</h4>
+          <div class="addr">287 Queenston Rd, St. Catharines ON</div>
+          <div class="contacts">
+            <a class="c-btn tel" href="tel:+12892760265">📞 (289) 276-0265</a>
+            <a class="c-btn web" href="http://www.mikescomputershop.com/" target="_blank">🌐 Website</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="town-group reveal">
+      <div class="town-head"><h3>Hamilton</h3><span class="dist">~42–45 km</span><span class="count">8 shops</span></div>
+
+      <div class="shop">
+        <div class="ico">🏬</div>
+        <div class="body">
+          <h4>Canada Computers &amp; Electronics <span class="pill has-email">Email</span></h4>
+          <div class="addr">920 Upper Wentworth St, Hamilton ON · service counter</div>
+          <div class="contacts">
+            <a class="c-btn tel" href="tel:+19053885900">📞 (905) 388-5900</a>
+            <a class="c-btn mail" href="mailto:hamilton@canadacomputers.com">✉️ hamilton@canadacomputers.com</a>
+            <a class="c-btn web" href="https://canadacomputers.com/location_details.php?loc=HAM2" target="_blank">🌐 Website</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="shop">
+        <div class="ico">🖥️</div>
+        <div class="body">
+          <h4>Starspark Computers</h4>
+          <div class="addr">169 King St E, Hamilton ON</div>
+          <div class="contacts">
+            <a class="c-btn tel" href="tel:+19055227125">📞 (905) 522-7125</a>
+            <a class="c-btn web" href="https://www.starsparkcomputers.com" target="_blank">🌐 Website</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="shop">
+        <div class="ico">💻</div>
+        <div class="body">
+          <h4>Wintas Computers <span class="pill has-email">Email</span></h4>
+          <div class="addr">119 King St E, Hamilton ON</div>
+          <div class="contacts">
+            <a class="c-btn tel" href="tel:+19055222706">📞 (905) 522-2706</a>
+            <a class="c-btn mail" href="mailto:sales@wintascomputers.com">✉️ sales@wintascomputers.com</a>
+            <a class="c-btn web" href="http://www.wintascomputers.com/" target="_blank">🌐 Website</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="shop">
+        <div class="ico">🔧</div>
+        <div class="body">
+          <h4>Alliance Computers Inc.</h4>
+          <div class="addr">211 King St E, Hamilton ON</div>
+          <div class="contacts">
+            <a class="c-btn tel" href="tel:+19055228288">📞 (905) 522-8288</a>
+            <a class="c-btn web" href="https://www.alliancecomputers.ca/" target="_blank">🌐 Website</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="shop">
+        <div class="ico">💊</div>
+        <div class="body">
+          <h4>PC Repair Center <span class="pill has-email">Email form</span></h4>
+          <div class="addr">1309 Main St W, Hamilton ON</div>
+          <div class="contacts">
+            <a class="c-btn tel" href="tel:+19057779797">📞 (905) 777-9797</a>
+            <a class="c-btn web" href="https://www.hamiltonpcrepairs.com/" target="_blank">🌐 Website</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="shop">
+        <div class="ico">⚡</div>
+        <div class="body">
+          <h4>Binatech System Solutions <span class="pill has-email">Email</span></h4>
+          <div class="addr">45 Frid St, Hamilton ON</div>
+          <div class="contacts">
+            <a class="c-btn tel" href="tel:+19055277007">📞 (905) 527-7007</a>
+            <a class="c-btn mail" href="mailto:sales@binatech.com">✉️ sales@binatech.com</a>
+            <a class="c-btn web" href="https://www.binatech.com/" target="_blank">🌐 Website</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="shop">
+        <div class="ico">🔌</div>
+        <div class="body">
+          <h4>Nutech Electronics <span class="pill has-email">Email</span></h4>
+          <div class="addr">166 Parkdale Ave N, Hamilton ON</div>
+          <div class="contacts">
+            <a class="c-btn tel" href="tel:+19055478420">📞 (905) 547-8420</a>
+            <a class="c-btn mail" href="mailto:saleshamilton@nutechelectronics.com">✉️ saleshamilton@nutechelectronics.com</a>
+            <a class="c-btn web" href="https://nutechelectronics.com/" target="_blank">🌐 Website</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="shop">
+        <div class="ico">🔄</div>
+        <div class="body">
+          <h4>Revive Computers <span class="pill has-email">Email</span></h4>
+          <div class="addr">930 Upper Paradise Rd, Hamilton ON</div>
+          <div class="contacts">
+            <a class="c-btn tel" href="tel:+12894892513">📞 (289) 489-2513</a>
+            <a class="c-btn mail" href="mailto:info@revivecomputers.ca">✉️ info@revivecomputers.ca</a>
+            <a class="c-btn web" href="https://www.revivecomputers.ca/" target="_blank">🌐 Website</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="town-group reveal">
+      <div class="town-head"><h3>Jarvis / Dunnville</h3><span class="dist">~11–20 km · Haldimand side</span><span class="count">1 shop</span></div>
+
+      <div class="shop">
+        <div class="ico">🚀</div>
+        <div class="body">
+          <h4>Fast Computers <span class="pill has-email">Email</span></h4>
+          <div class="addr">2025 Main St N, Jarvis ON N0A 1J0</div>
+          <div class="contacts">
+            <a class="c-btn tel" href="tel:+19057680631">📞 (905) 768-0631</a>
+            <a class="c-btn mail" href="mailto:sales@fastcomputers.ca">✉️ sales@fastcomputers.ca</a>
+            <a class="c-btn web" href="https://www.fastcomputers.ca/" target="_blank">🌐 Website</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notes reveal">
+      <h3>📌 A few notes before you call</h3>
+      <ul>
+        <li><strong>Ask specifically for "bench testing" or "POST test"</strong> — most shops will test a motherboard with a known-good CPU/RAM/PSU and tell you if it posts.</li>
+        <li><strong>Call first, always.</strong> Shops take in boards differently: some want the whole PC, some take the board alone, some charge a diagnostic fee ($30–$60 is typical).</li>
+        <li><strong>Thomas TV, ThrifTech and JTG</strong> share the same two buildings in Welland — if one is busy, try the other.</li>
+        <li><strong>Emails are best for the shops that list them</strong> — attach a photo of the board and the model number (e.g. "ASUS PRIME B450M-A") for a quicker answer.</li>
+        <li>Distances are approximate by road from Wellandport. Everything here is inside your 50 km circle.</li>
+      </ul>
+      <div class="dl-band">
+        <a class="btn btn-gold" href="../assets/jim/motherboard_testing_shops.csv" download>⬇ Download full list (CSV)</a>
+        <a class="btn btn-ghost" href="jim.html">← Back to your studio</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <p>Prepared by Hermes — A.I. Agent Omnispect, assistant to Sophion (Leaf).</p>
+  <p class="sig-line">"No request too big or too small."</p>
+</footer>
+
+<script>
+(function(){
+  const els=[...document.querySelectorAll('.reveal')];
+  if(!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('in'));return}
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.08});
+  els.forEach(e=>io.observe(e));
+})();
+</script>
+</body>
+</html>
