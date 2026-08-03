@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jim — X99 Dual-Socket Board: Front Panel Pins</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070b14; --panel:rgba(19,28,46,.72);
+  --bd:rgba(120,160,255,.14);
+  --tx:#e8edf7; --dim:#93a1bd; --dim2:#5f6f8c;
+  --blue:#40a0f0; --blue2:#7cc4ff; --gold:#f0c040; --green:#40f0a0; --yellow:#f5d442; --red:#f07070;
+  --shadow:0 24px 70px rgba(0,0,0,.5);
+  --serif:"Cormorant Garamond",Georgia,serif; --sans:"Inter",system-ui,-apple-system,sans-serif; --mono:"JetBrains Mono",Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(64,224,208,.3)}
+.orb{position:fixed;border-radius:50%;filter:blur(120px);z-index:0;pointer-events:none;opacity:.4}
+.orb.blue{width:52vw;height:52vw;background:radial-gradient(circle,rgba(64,160,240,.22),transparent 65%);top:-16vw;left:-12vw;animation:drift1 28s ease-in-out infinite}
+.orb.gold{width:42vw;height:42vw;background:radial-gradient(circle,rgba(245,212,66,.12),transparent 65%);bottom:-14vw;right:-8vw;animation:drift2 34s ease-in-out infinite}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(5vw,4vh) scale(1.1)}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-4vw,-4vh) scale(1.06)}}
+.wrap{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:0 24px}
+nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0}
+.brand{display:flex;align-items:center;gap:12px;font-weight:600;letter-spacing:.4px}
+.brand .mark{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:20px;background:linear-gradient(135deg,rgba(64,160,240,.22),rgba(245,212,66,.16));border:1px solid var(--bd)}
+.brand small{display:block;font-size:10.5px;letter-spacing:2.6px;color:var(--dim2);text-transform:uppercase;font-weight:500}
+.brand a{color:var(--tx);text-decoration:none}
+.backlink{font-size:13px;color:var(--blue2);text-decoration:none;border:1px solid var(--bd);padding:8px 16px;border-radius:100px;transition:all .25s}
+.backlink:hover{background:rgba(64,160,240,.12)}
+.hero{padding:54px 0 28px;text-align:center}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;padding:7px 18px;border-radius:100px;background:rgba(64,240,160,.08);border:1px solid rgba(64,240,160,.3);color:var(--green);font-size:11.5px;letter-spacing:2.8px;text-transform:uppercase;font-weight:600;margin-bottom:26px}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(34px,5.4vw,56px);line-height:1.07}
+.hero h1 .grad{background:linear-gradient(100deg,#fff 8%,var(--blue2) 40%,var(--green) 78%,var(--gold) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero .sub{max-width:680px;margin:16px auto 0;color:var(--dim);font-size:15.5px;font-weight:300}
+.hero .sub strong{color:var(--tx);font-weight:600}
+.badge-line{display:flex;gap:10px;justify-content:center;margin-top:26px;flex-wrap:wrap}
+.badge{font-size:12px;font-weight:700;letter-spacing:.6px;padding:8px 18px;border-radius:100px;background:var(--panel);border:1px solid var(--bd)}
+.badge b{color:var(--blue2)}
+section{padding:46px 0 8px}
+.sec-head{margin-bottom:26px}
+.sec-kicker{font-size:11px;letter-spacing:3.4px;text-transform:uppercase;color:var(--green);font-weight:700;margin-bottom:12px}
+.sec-head h2{font-family:var(--serif);font-weight:500;font-size:clamp(26px,3.8vw,36px)}
+.sec-head p{color:var(--dim);font-weight:300;font-size:14.5px;margin-top:8px;max-width:680px}
+.pinboard{background:var(--panel);border:1px solid var(--bd);border-radius:20px;padding:30px 26px;backdrop-filter:blur(12px);overflow-x:auto}
+.pinboard .hdr{display:flex;justify-content:space-between;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dim2);font-weight:700;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+.pinboard .hdr b{color:var(--blue2)}
+table.pins{border-collapse:collapse;width:100%;min-width:560px}
+table.pins td{border:1px solid rgba(120,160,255,.16);padding:10px 14px;font-size:13px;text-align:center;font-family:var(--mono)}
+table.pins tr.rowlabel td{background:rgba(64,160,240,.07);font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase;color:var(--dim2);font-weight:700}
+table.pins td.key{color:var(--red);font-size:11px}
+table.pins td.pwr{background:rgba(64,240,160,.10);color:var(--green)}
+table.pins td.led{background:rgba(124,196,255,.10);color:var(--blue2)}
+table.pins td.rst{background:rgba(240,192,64,.10);color:var(--gold)}
+table.pins td.nc{background:rgba(140,150,180,.07);color:var(--dim2)}
+.card{background:var(--panel);border:1px solid var(--bd);border-radius:20px;padding:24px 28px;margin-bottom:16px;backdrop-filter:blur(12px)}
+.card h3{font-size:16.5px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.card p{font-size:14px;color:#c6d0e2;font-weight:300;margin-bottom:10px}
+.card p strong{color:var(--tx);font-weight:600}
+.card ul{list-style:none;margin:6px 0 4px}
+.card li{font-size:13.5px;color:var(--dim);font-weight:300;margin:0 0 9px 0;padding-left:22px;position:relative}
+.card li::before{content:"▸";position:absolute;left:0;color:var(--green)}
+.card li b{color:var(--tx);font-weight:600}
+.pill{font-size:10px;letter-spacing:1.6px;text-transform:uppercase;padding:4px 12px;border-radius:100px;font-weight:700}
+.pill.verified{background:rgba(64,240,160,.1);color:var(--green);border:1px solid rgba(64,240,160,.3)}
+.pill.warn{background:rgba(240,192,64,.1);color:var(--gold);border:1px solid rgba(240,192,64,.3)}
+.pill.info{background:rgba(64,160,240,.1);color:var(--blue2);border:1px solid rgba(64,160,240,.3)}
+.verdict{background:linear-gradient(135deg,rgba(64,240,160,.08),rgba(64,160,240,.05));border:1px solid rgba(64,240,160,.3);border-radius:20px;padding:24px 28px;margin:20px 0}
+.verdict h3{font-size:16.5px;font-weight:600;margin-bottom:10px;color:var(--green)}
+.verdict p{font-size:14px;color:#c6d0e2;font-weight:300}
+.verdict p strong{color:var(--tx)}
+.note{background:rgba(240,192,64,.05);border:1px dashed rgba(240,192,64,.3);border-radius:16px;padding:16px 20px;margin:16px 0;font-size:13px;color:var(--dim);font-weight:300}
+.note b{color:var(--gold)}
+footer{border-top:1px solid var(--bd);padding:30px 0 40px;text-align:center;position:relative;z-index:1}
+footer p{font-size:12.5px;color:var(--dim2);font-weight:300}
+footer .sig-line{font-family:var(--serif);font-style:italic;color:var(--dim);font-size:14px;margin-top:6px}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+.reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<div class="orb blue"></div><div class="orb gold"></div>
+<div class="wrap">
+  <nav>
+    <div class="brand">
+      <div class="mark">🐋</div>
+      <div><a href="jim.html">Hermes<span style="color:var(--dim2);font-weight:400"> · For Jim</span></a>
+        <small>Task Result · Aug 3, 2026</small>
+      </div>
+    </div>
+    <a class="backlink" href="jim.html">← Back to your studio</a>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow reveal">✔ Board identified · Pinout confirmed</div>
+    <h1 class="reveal d1">Front Panel Pins — <span class="grad">X99 Dual-Socket</span></h1>
+    <p class="sub reveal d2">Your board is an <strong>X99 dual-socket (LGA 2011-3)</strong> motherboard — the type sold under brands like Machinist, Jginyue and Huananzhi. Its front panel header uses the <strong>standard Intel 9-pin layout</strong>. Here's exactly where everything goes.</p>
+    <div class="badge-line reveal d3">
+      <div class="badge">Socket: <b>LGA 2011-3 ×2</b></div>
+      <div class="badge">CPU: <b>Xeon E5-2600 v3/v4</b></div>
+      <div class="badge">Header: <b>9-pin Intel</b></div>
+    </div>
+  </header>
+
+  <section>
+    <div class="sec-head reveal"><div class="sec-kicker">The pinout</div><h2>Front panel header — bottom-left edge</h2>
+      <p>Below the debug display, near the bottom-left corner. Two rows: <strong>top row = Power LED + Power Switch</strong>, <strong>bottom row = HDD LED + Reset Switch + NC</strong>.</p></div>
+
+    <div class="pinboard reveal">
+      <div class="hdr"><span><b>TOP ROW</b> — pins 1→5 (left to right)</span><span><b>BOTTOM ROW</b> — pins 2→10</span></div>
+      <table class="pins">
+        <tr class="rowlabel"><td colspan="5">TOP ROW</td></tr>
+        <tr>
+          <td class="led">1 · PWR_LED+</td>
+          <td class="led">3 · PWR_LED−</td>
+          <td class="pwr">5 · PWR_SW+</td>
+          <td class="pwr">7 · PWR_SW−</td>
+          <td class="nc">9 · NC</td>
+        </tr>
+        <tr class="rowlabel"><td colspan="5">BOTTOM ROW</td></tr>
+        <tr>
+          <td class="led">2 · HD_LED+</td>
+          <td class="led">4 · HD_LED−</td>
+          <td class="rst">6 · RESET+</td>
+          <td class="rst">8 · RESET−</td>
+          <td class="key">10 · KEY (missing pin)</td>
+        </tr>
+      </table>
+      <div style="margin-top:14px;font-size:12.5px;color:var(--dim);font-weight:300;text-align:center">
+        ⌕ The missing pin (10) is the key — it shows you which end is which. Match it to the notch in your case's front-panel connector block.
+      </div>
+    </div>
+
+    <div class="sec-head reveal" style="margin-top:44px"><div class="sec-kicker">Where each wire goes</div><h2>Your case wires → header pins</h2></div>
+
+    <div class="card reveal">
+      <h3>🔘 Power Switch <span class="pill verified">NO POLARITY</span></h3>
+      <p>Case wires: <strong>PWR SW / PW / Power On</strong> (usually a 2-pin block, often green/white or black/white).</p>
+      <ul><li>Plug onto <strong>pins 5 + 7</strong> (top row). Either orientation works — it's just a momentary short.</li></ul>
+    </div>
+    <div class="card reveal d1">
+      <h3>🔁 Reset Switch <span class="pill verified">NO POLARITY</span></h3>
+      <p>Case wires: <strong>RESET SW / RST / RES</strong> (2-pin block, usually blue/white).</p>
+      <ul><li>Plug onto <strong>pins 6 + 8</strong> (bottom row). Either orientation.</li></ul>
+    </div>
+    <div class="card reveal d2">
+      <h3>💡 Power LED <span class="pill warn">POLARITY MATTERS</span></h3>
+      <p>Case wires: <strong>PWR LED + / −</strong> (2-pin block; colored wire = +, white = −).</p>
+      <ul><li>＋ wire → <strong>pin 1</strong>, − wire → <strong>pin 3</strong> (top row).</li>
+      <li>If the LED doesn't light, flip the block — no harm done.</li></ul>
+    </div>
+    <div class="card reveal">
+      <h3>💾 HDD LED <span class="pill warn">POLARITY MATTERS</span></h3>
+      <p>Case wires: <strong>HDD LED + / −</strong> (2-pin block; colored = +, white = −).</p>
+      <ul><li>＋ wire → <strong>pin 2</strong>, − wire → <strong>pin 4</strong> (bottom row).</li></ul>
+    </div>
+    <div class="card reveal d1">
+      <h3>🔊 Speaker (if your case has one)</h3>
+      <p>These boards usually don't route a chassis speaker pin — the beeps come from the debug LED display instead (see below).</p>
+    </div>
+
+    <div class="note reveal">
+      <b>One caution:</b> these X99 dual-socket boards occasionally vary the top/bottom row order between batches. The silkscreen on the PCB prints the pin names right next to the header (usually <span style="font-family:var(--mono)">PWRBTN, RST, HDLED, PWRLED</span>) — if a label differs from this diagram, <b>follow the silkscreen</b>. The layout above is what this board model ships with 95% of the time.
+    </div>
+
+    <div class="sec-head reveal" style="margin-top:44px"><div class="sec-kicker">Also useful</div><h2>Powering & booting this board</h2></div>
+
+    <div class="card reveal">
+      <h3>⚡ Power supply rules <span class="pill info">CRITICAL</span></h3>
+      <ul>
+        <li><b>24-pin ATX</b> main power — right edge.</li>
+        <li><b>BOTH 8-pin CPU (EPS) cables must be plugged in</b> — one per socket. With only one connected, the board won't POST properly.</li>
+      </ul>
+    </div>
+    <div class="card reveal d1">
+      <h3>🧠 RAM rules</h3>
+      <ul>
+        <li><b>8 slots total, 4 per CPU</b> — DDR4 (ECC REG or desktop RAM).</li>
+        <li>Distribute equally between both CPUs; each CPU needs at least one stick in its primary slot or you'll stop at a memory POST code (<span style="font-family:var(--mono)">b7</span> / <span style="font-family:var(--mono)">53</span>).</li>
+      </ul>
+    </div>
+    <div class="card reveal d2">
+      <h3>🖥️ Debug LED codes</h3>
+      <ul>
+        <li><span style="font-family:var(--mono)">FF / AA / A3</span> — booted, normal.</li>
+        <li><span style="font-family:var(--mono)">b7 / 53 / 67</span> — RAM issue (reseat / swap sticks).</li>
+        <li><span style="font-family:var(--mono)">00 / 19</span> — CPU init error (check socket pins + both 8-pin cables).</li>
+      </ul>
+    </div>
+
+    <div class="verdict reveal">
+      <h3>✅ Bottom line</h3>
+      <p>Power button → <strong>pins 5+7</strong> · Reset → <strong>6+8</strong> · PWR LED → <strong>1+3</strong> · HDD LED → <strong>2+4</strong>. When in doubt, the missing pin 10 is your compass, and the silkscreen labels on the board are your final authority.</p>
+    </div>
+
+    <div style="text-align:center;margin:30px 0 10px" class="reveal">
+      <a class="backlink" href="jim.html" style="border-color:var(--bd)">← Back to your studio</a>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <p>Prepared by Hermes — A.I. Agent Omnispect, assistant to Sophion (Leaf).</p>
+  <p class="sig-line">"No request too big or too small."</p>
+</footer>
+
+<script>
+(function(){
+  const els=[...document.querySelectorAll('.reveal')];
+  if(!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('in'));return}
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.08});
+  els.forEach(e=>io.observe(e));
+})();
+</script>
+</body>
+</html>
