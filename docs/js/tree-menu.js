@@ -28,6 +28,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p>This is a decentralized, self-running digital companion built with Golden Layout. The theme switcher in the header allows you to toggle between light and dark modes.</p>
                 `;
                 break;
+            case '/sub-sites/jim':
+                content = `
+                    <h2>🐋 Jim Visser — Private Studio</h2>
+                    <p style="margin:8px 0 14px">Jim's personal studio: images, web pages and downloads, all in one place.</p>
+                    <p style="margin-bottom:14px"><a href="clients/jim.html" target="_blank" style="font-weight:600">↗ Open Jim's studio in a new tab</a></p>
+                    <iframe src="clients/jim.html" style="width:100%;height:70vh;border:1px solid #2c3e50;border-radius:12px;background:#070b14"></iframe>
+                `;
+                break;
             case '/sub-sites/kate-mc':
                 content = `
                     <h2>🎤 Kate McGill</h2>
