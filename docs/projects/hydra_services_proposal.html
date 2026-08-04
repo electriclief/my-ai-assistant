@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hydra Services v2 — Service Containers (Proposal)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060a13; --panel:rgba(17,26,44,.75); --panel2:rgba(11,17,30,.92);
+  --bd:rgba(120,160,255,.14); --bd2:rgba(64,224,208,.35);
+  --tx:#e8edf7; --dim:#93a1bd; --dim2:#5f6f8c;
+  --blue:#40a0f0; --blue2:#7cc4ff; --gold:#f0c040; --teal:#40e0d0; --green:#40f0a0; --red:#f07070;
+  --shadow:0 24px 70px rgba(0,0,0,.5);
+  --serif:"Cormorant Garamond",Georgia,serif; --sans:"Inter",system-ui,-apple-system,sans-serif; --mono:"JetBrains Mono",Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(64,224,208,.3)}
+.orb{position:fixed;border-radius:50%;filter:blur(120px);z-index:0;pointer-events:none;opacity:.4}
+.orb.blue{width:52vw;height:52vw;background:radial-gradient(circle,rgba(64,160,240,.22),transparent 65%);top:-16vw;left:-12vw;animation:drift1 28s ease-in-out infinite}
+.orb.teal{width:42vw;height:42vw;background:radial-gradient(circle,rgba(64,224,208,.13),transparent 65%);bottom:-14vw;right:-8vw;animation:drift2 34s ease-in-out infinite}
+.orb.gold{width:30vw;height:30vw;background:radial-gradient(circle,rgba(240,192,64,.10),transparent 65%);top:40vh;left:55vw;animation:drift3 40s ease-in-out infinite}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(5vw,4vh) scale(1.1)}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-4vw,-4vh) scale(1.06)}}
+@keyframes drift3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(3vw,-5vh) scale(1.15)}}
+.wrap{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding:0 24px}
+nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0}
+.brand{display:flex;align-items:center;gap:12px;font-weight:600;letter-spacing:.4px}
+.brand .mark{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:20px;background:linear-gradient(135deg,rgba(64,160,240,.22),rgba(64,224,208,.16));border:1px solid var(--bd)}
+.brand small{display:block;font-size:10.5px;letter-spacing:2.6px;color:var(--dim2);text-transform:uppercase;font-weight:500}
+.brand a{color:var(--tx);text-decoration:none}
+nav .back{font-size:12px;color:var(--dim);text-decoration:none;border:1px solid var(--bd);padding:8px 16px;border-radius:100px;transition:all .25s}
+nav .back:hover{color:var(--teal);border-color:var(--bd2)}
+.hero{padding:64px 0 30px;text-align:center}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;padding:7px 18px;border-radius:100px;background:rgba(64,224,208,.08);border:1px solid rgba(64,224,208,.28);color:var(--teal);font-size:11.5px;letter-spacing:2.8px;text-transform:uppercase;font-weight:600;margin-bottom:26px}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(40px,6.4vw,68px);line-height:1.04}
+.hero h1 .grad{background:linear-gradient(100deg,#fff 8%,var(--blue2) 40%,var(--teal) 75%,var(--gold) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero .sub{max-width:720px;margin:18px auto 0;color:var(--dim);font-size:16px;font-weight:300}
+.hero .sub strong{color:var(--tx);font-weight:600}
+.law-row{display:flex;gap:14px;justify-content:center;margin-top:34px;flex-wrap:wrap}
+.law{background:var(--panel);border:1px solid var(--bd);border-radius:16px;padding:16px 22px;text-align:center;backdrop-filter:blur(10px);max-width:300px}
+.law b{display:block;font-size:15px;font-family:var(--serif);color:var(--teal);margin-bottom:4px}
+.law span{font-size:12px;color:var(--dim);font-weight:300}
+section{padding:56px 0 8px}
+.sec-head{margin-bottom:30px}
+.sec-kicker{font-size:11px;letter-spacing:3.4px;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:12px}
+.sec-head h2{font-family:var(--serif);font-weight:500;font-size:clamp(26px,3.8vw,36px)}
+.sec-head p{color:var(--dim);font-weight:300;font-size:14.5px;margin-top:10px;max-width:760px}
+.sec-head p b{color:var(--tx);font-weight:600}
+h3{font-family:var(--serif);font-weight:500;font-size:21px;margin:26px 0 10px}
+p{font-size:14.5px;font-weight:300;color:#c6d2e8}
+p b{color:var(--tx);font-weight:600}
+.mono{font-family:var(--mono);font-size:12.5px;color:var(--teal)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--panel);border:1px solid var(--bd);border-radius:18px;padding:20px 22px;backdrop-filter:blur(10px)}
+.card h4{font-size:13.5px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card p{font-size:12.8px;color:var(--dim);font-weight:300}
+.card .tag{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:100px;font-weight:700;margin-left:auto}
+.tag.now{background:rgba(64,160,240,.1);color:var(--blue2);border:1px solid rgba(64,160,240,.25)}
+.tag.need{background:rgba(240,192,64,.08);color:var(--gold);border:1px dashed rgba(240,192,64,.35)}
+.tag.new{background:rgba(64,224,208,.1);color:var(--teal);border:1px solid rgba(64,224,208,.35)}
+.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:14px 0}
+.tbl th{text-align:left;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--dim2);font-weight:700;padding:10px 14px;border-bottom:1px solid var(--bd)}
+.tbl td{padding:11px 14px;border-bottom:1px solid rgba(120,160,255,.08);color:var(--dim);font-weight:300;vertical-align:top}
+.tbl td b{color:var(--tx);font-weight:600}
+.tbl td .mono{font-size:12px}
+pre{background:var(--panel2);border:1px solid var(--bd);border-radius:14px;padding:18px 20px;font-family:var(--mono);font-size:12.3px;line-height:1.6;overflow-x:auto;color:#c9d6ec;margin:12px 0}
+pre .c{color:var(--dim2)}pre .k{color:var(--teal)}pre .s{color:var(--gold)}pre .n{color:var(--blue2)}pre .f{color:var(--green)}pre .r{color:var(--red)}
+.treebox{background:var(--panel2);border:1px solid var(--bd);border-radius:14px;padding:16px 20px;font-family:var(--mono);font-size:12.6px;line-height:1.75;color:#c9d6ec;overflow-x:auto;margin:12px 0}
+.treebox .dim{color:var(--dim2)}.treebox .teal{color:var(--teal)}.treebox .gold{color:var(--gold)}.treebox .green{color:var(--green)}.treebox .blue{color:var(--blue2)}
+.flow{display:flex;align-items:stretch;justify-content:center;gap:0;flex-wrap:wrap;margin:26px 0}
+.flow .step{background:var(--panel);border:1px solid var(--bd);border-radius:14px;padding:14px 18px;max-width:150px;text-align:center;position:relative}
+.flow .step b{display:block;font-size:12.5px;color:var(--tx);margin-bottom:4px}
+.flow .step span{font-size:10.5px;color:var(--dim);font-weight:300;line-height:1.45;display:block}
+.flow .step .num{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--teal);color:#04121a;font-size:10px;font-weight:700;width:20px;height:20px;border-radius:50%;display:grid;place-items:center}
+.flow .arrow{align-self:center;color:var(--dim2);font-size:18px;padding:0 8px}
+.flow .step.fail{border-color:rgba(240,112,112,.4)}
+.flow .step.fail b{color:var(--red)}
+.flow .step.agent{border-color:var(--bd2)}
+.flow .step.agent b{color:var(--teal)}
+.pill{font-size:9.5px;letter-spacing:1.2px;text-transform:uppercase;padding:3px 10px;border-radius:100px;font-weight:700;display:inline-block;margin-right:6px}
+.pill.teal{background:rgba(64,224,208,.1);color:var(--teal);border:1px solid rgba(64,224,208,.25)}
+.pill.gold{background:rgba(240,192,64,.08);color:var(--gold);border:1px solid rgba(240,192,64,.28)}
+.pill.blue{background:rgba(64,160,240,.1);color:var(--blue2);border:1px solid rgba(64,160,240,.25)}
+.pill.green{background:rgba(64,240,160,.1);color:var(--green);border:1px solid rgba(64,240,160,.3)}
+.pill.red{background:rgba(240,112,112,.1);color:var(--red);border:1px solid rgba(240,112,112,.3)}
+.note{background:var(--panel);border:1px solid var(--bd);border-radius:18px;padding:22px 26px;margin-top:18px;font-size:13px;color:var(--dim);font-weight:300;backdrop-filter:blur(10px)}
+.note b{color:var(--tx)}
+.note .hl{color:var(--teal);font-weight:600}
+.road{list-style:none}
+.road li{position:relative;padding:0 0 26px 34px;border-left:1px solid rgba(120,160,255,.18);margin-left:10px}
+.road li:last-child{border-left:1px solid transparent}
+.road li::before{content:'';position:absolute;left:-7px;top:4px;width:13px;height:13px;border-radius:50%;background:var(--bg);border:2px solid var(--teal)}
+.road li.gold::before{border-color:var(--gold)}
+.road li b{font-size:14px;color:var(--tx)}
+.road li p{font-size:12.8px;margin-top:4px}
+footer{border-top:1px solid var(--bd);padding:34px 0 46px;text-align:center;position:relative;z-index:1;margin-top:60px}
+footer p{font-size:12.5px;color:var(--dim2);font-weight:300}
+footer .sig-line{font-family:var(--serif);font-style:italic;color:var(--dim);font-size:14px;margin-top:6px}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:760px){.grid2,.grid3{grid-template-columns:1fr}.flow .arrow{transform:rotate(90deg)}}
+</style>
+</head>
+<body>
+<div class="orb blue"></div><div class="orb teal"></div><div class="orb gold"></div>
+<div class="wrap">
+  <nav>
+    <div class="brand">
+      <div class="mark">💧</div>
+      <div><a href="https://github.com/electriclief" target="_blank" style="color:inherit">Hydra<span style="color:var(--dim2);font-weight:400"> · Services Proposal</span></a>
+        <small>Decentralized compute network · Draft v0.2</small>
+      </div>
+    </div>
+    <a class="back" href="https://electriclief.github.io/my-ai-assistant/">← Hub</a>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow reveal">Proposal · Services v2 · 2026-08-04</div>
+    <h1 class="reveal d1">Service <span class="grad">Containers</span></h1>
+    <p class="sub reveal d2">Any code can be a service. The <strong>container</strong> makes it one — a self-describing package authored by the network's Hermes, installed like a ComfyUI custom node, and improved every time it fails.</p>
+    <div class="law-row reveal d3">
+      <div class="law"><b>① Any code is a service</b><span>CLI, API, batch, stream — if it runs and produces output, it can be wrapped.</span></div>
+      <div class="law"><b>② The Hermes authors it</b><span>The agent attached to the network writes the container as part of every install.</span></div>
+      <div class="law"><b>③ Failure improves it</b><span>Every failed run feeds back; the agent patches, versions, and re-serves.</span></div>
+    </div>
+  </header>
+
+  <section>
+    <div class="sec-head reveal"><div class="sec-kicker">The gap</div><h2>Today vs. what's needed</h2>
+      <p>Today a service is a <b>row in a registry</b>: a name, a command, some needs, reported by a client. That was enough to prove the loop (Human → Agent → GPU Worker → Verified Result). But it is a <b>pointer to code</b>, not a <b>description of code</b>. Nothing says how to install it, what it needs, which fields exist, or how to fix it.</p></div>
+    <div class="grid2">
+      <div class="card reveal"><h4>📦 Today <span class="tag now">EXISTS</span></h4>
+        <p>The catalog is a directory of <b>pointers</b>: <span class="mono">name + runMode + runCommand + exePath + needs</span>, reported by the client, kept in server RAM, gone on restart. Known-good entries in <span class="mono">library.json</span> are the only durable defs. One flat field set for every service, CLI and API alike.</p></div>
+      <div class="card reveal d1"><h4>🧰 Needed <span class="tag need">REQUIRED</span></h4>
+        <p>A service is a <b>container</b>: a manifest + assets + templates + hooks. It carries its own install, verify, and upgrade logic. Its fields are <b>structured per kind</b> — a flag tree for CLIs, a template with exposed/hidden fields for APIs. It has a version and a history of failures it survived.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head reveal"><div class="sec-kicker">The container</div><h2>Anatomy of a service container</h2>
+      <p>One folder (or a <span class="mono">.hydra</span> zip) is the whole service — installed by dropping it in, like a ComfyUI custom node. The manifest is the <b>docker-compose of services</b>: the only file an agent or human needs to read to know everything about how to run it.</p></div>
+    <div class="treebox reveal">
+<span class="dim">svc-sd/</span>                       <span class="dim"># the container root (or svc-sd.hydra zip)</span>
+├── <span class="teal">hydra.yaml</span>                 <span class="dim"># THE manifest — everything below is optional</span>
+├── <span class="teal">assets/</span>                  <span class="dim"># bundled files: scripts, icons, sample media</span>
+├── <span class="teal">templates/</span>               <span class="dim"># API templates (ComfyUI-style workflows, JSON)</span>
+├── <span class="teal">hooks/</span>                   <span class="dim"># lifecycle: install.sh · verify.sh · upgrade.sh · on-fail.sh</span>
+└── <span class="teal">README.md</span>                 <span class="dim"># prose for humans, contracts for agents</span>
+    </div>
+    <h3>Layer A — fields every service shares (global)</h3>
+    <table class="tbl reveal">
+      <tr><th>field</th><th>meaning</th></tr>
+      <tr><td><b>identity</b></td><td><span class="mono">name · version · kind</span> <span class="dim">(cli | api | batch | stream) · source</span></td></tr>
+      <tr><td><b>ownership</b></td><td><span class="mono">author</span> <span class="dim">(clientId or hermes) ·</span> <span class="mono">visibility</span> <span class="dim">(local | network | listed) ·</span> <span class="mono">permissions</span></td></tr>
+      <tr><td><b>runtime</b></td><td><span class="mono">runMode · command | endpoint · needs</span> <span class="dim">(cores/gpu/ramMb/disk) ·</span> <span class="mono">healthCheck</span></td></tr>
+      <tr><td><b>lifecycle</b></td><td><span class="mono">hooks: install · verify · upgrade · on-fail</span></td></tr>
+      <tr><td><b>provenance</b></td><td><span class="mono">createdBy · createdAt · improvedBy[] · history[]</span> <span class="dim">— the failure→fix chain, versioned</span></td></tr>
+    </table>
+    <h3>Layer B — fields per service kind (the tree)</h3>
+    <p>CLI services get a <b>flag tree</b> (sd.exe has a hundred flags — group them, expose a few). API services get <b>templates</b> with an <b>exposed/hidden</b> split (ComfyUI's workflow JSON: the client sees five fields, never the node graph).</p>
+  </section>
+
+  <section>
+    <div class="sec-head reveal"><div class="sec-kicker">Reference example 1</div><h2>sd.exe — the CLI flag tree</h2>
+      <p>Stable Diffusion cpp is a prompt-flag machine: <span class="mono">--prompt --cfg-scale --steps --sampler --control-net …</span>. The container groups the tree and marks what a client may touch vs. what stays advanced.</p></div>
+    <pre class="reveal"><span class="c"># svc-sd/hydra.yaml</span>
+<span class="k">kind:</span> cli
+<span class="k">version:</span> <span class="n">1.4.2</span>
+<span class="k">command:</span> <span class="s">sd.exe</span>
+<span class="k">needs:</span> { <span class="k">cores:</span> <span class="n">8</span>, <span class="k">ramMb:</span> <span class="n">16384</span>, <span class="k">gpu:</span> <span class="n">true</span> }
+<span class="k">fields:</span>
+  <span class="k">prompt:</span>
+    <span class="k">text:</span>      { <span class="k">exposed:</span> <span class="n">true</span>, <span class="k">type:</span> <span class="s">string</span>,  <span class="k">help:</span> <span class="s">"what to draw"</span> }
+    <span class="k">negative:</span> { <span class="k">exposed:</span> <span class="n">true</span>, <span class="k">type:</span> <span class="s">string</span>,  <span class="k">help:</span> <span class="s">"what NOT to draw"</span> }
+  <span class="k">sampling:</span>
+    <span class="k">steps:</span>   { <span class="k">exposed:</span> <span class="n">true</span>,  <span class="k">type:</span> <span class="s">int</span>,    <span class="k">default:</span> <span class="n">20</span> }
+    <span class="k">cfg:</span>     { <span class="k">exposed:</span> <span class="n">true</span>,  <span class="k">type:</span> <span class="s">number</span>, <span class="k">default:</span> <span class="n">7.0</span> }
+    <span class="k">seed:</span>    { <span class="k">exposed:</span> <span class="n">true</span>,  <span class="k">type:</span> <span class="s">int</span>,    <span class="k">default:</span> <span class="s">-1</span> }
+    <span class="k">sampler:</span> { <span class="k">exposed:</span> <span class="n">false</span>, <span class="k">type:</span> <span class="s">select</span>, <span class="k">options:</span> [<span class="s">euler</span>,<span class="s">ddim</span>,<span class="s">dpmpp_2m</span>] }
+  <span class="k">model:</span>
+    <span class="k">checkpoint:</span> { <span class="k">exposed:</span> <span class="n">true</span>, <span class="k">type:</span> <span class="s">select</span>, <span class="k">from:</span> <span class="s">"assets/models/"</span> }
+    <span class="k">vae:</span>       { <span class="k">exposed:</span> <span class="n">false</span> }
+  <span class="k">video:</span>                     <span class="c"># the long tail of flags — hidden, agent-tunable</span>
+    <span class="k">frames:</span> { <span class="k">exposed:</span> <span class="n">false</span> }  <span class="k">fps:</span> { <span class="k">exposed:</span> <span class="n">false</span> }  <span class="k">...</span></pre>
+    <p class="reveal">The renderer (or MCP tool) renders <b>only exposed fields</b> as a form. Everything else is agent-tunable — the network's Hermes may adjust hidden flags when a run fails, and record why.</p>
+  </section>
+
+  <section>
+    <div class="sec-head reveal"><div class="sec-kicker">Reference example 2</div><h2>ComfyUI — API template with exposed fields</h2>
+      <p>ComfyUI is API-based and template-driven. The container bundles the workflow JSON as a template; the client sees a handful of knobs, the node graph stays inside.</p></div>
+    <pre class="reveal"><span class="c"># svc-comfy/hydra.yaml</span>
+<span class="k">kind:</span> api
+<span class="k">version:</span> <span class="n">2.0.1</span>
+<span class="k">endpoint:</span> <span class="s">http://127.0.0.1:8188/prompt</span>
+<span class="k">healthCheck:</span> <span class="s">GET /system_stats</span>
+<span class="k">templates:</span>
+  <span class="k">txt2img:</span>  <span class="s">templates/txt2img.workflow.json</span>   <span class="c"># {{prompt}} {{width}} {{height}} {{seed}}</span>
+  <span class="k">img2img:</span>  <span class="s">templates/img2img.workflow.json</span>
+  <span class="k">upscale:</span>  <span class="s">templates/upscale.workflow.json</span>
+<span class="k">exposed:</span> [ <span class="s">prompt</span>, <span class="s">width</span>, <span class="s">height</span>, <span class="s">seed</span> ]   <span class="c"># the ONLY fields a client may set</span>
+<span class="k">hidden:</span>  [ <span class="s">workflow graph</span>, <span class="s">node internals</span>, <span class="s">custom nodes</span> ]</pre>
+    <p class="reveal">Install = drop the folder into ComfyUI's custom-node store, exactly like the ecosystem already does — the container spec simply <b>standardizes what ComfyUI custom nodes already are</b>, and extends it to every other kind of code.</p>
+  </section>
+
+  <section>
+    <div class="sec-head reveal"><div class="sec-kicker">The module rule</div><h2>Composition — one format, any size</h2>
+      <p><b>Break services into smaller modules where it makes logical sense.</b> A container is never forced to be monolithic: a <b>primitive</b> wraps one executable or endpoint; a <b>composite</b> is a pipeline whose steps point at other containers. Same manifest format, recursively — a pipeline is just a container with a <span class="mono">steps</span> field.</p></div>
+    <div class="treebox reveal">
+<span class="teal">svc-txt2img/</span>                          <span class="dim"># a COMPOSITE container (a pipeline)</span>
+├── <span class="teal">hydra.yaml</span>
+│   <span class="gold">kind:</span> <span class="blue">pipeline</span>   <span class="gold">version:</span> <span class="blue">3.0.0</span>
+│   <span class="gold">steps:</span>
+│     <span class="green">generate:</span> { <span class="gold">service:</span> <span class="s">svc-sd@1.4</span>,        <span class="gold">params:</span> { <span class="gold">prompt:</span> <span class="s">"{{prompt}}"</span>, <span class="gold">seed:</span> <span class="s">"{{seed}}"</span> } }
+│     <span class="green">upscale:</span>  { <span class="gold">service:</span> <span class="s">svc-upscale@0.9</span>,    <span class="gold">params:</span> { <span class="gold">scale:</span> <span class="blue">2</span> } }
+│     <span class="green">deliver:</span>  { <span class="gold">service:</span> <span class="s">svc-deliver@2.0</span> }
+│   <span class="gold">flow:</span> generate.output <span class="dim">→</span> upscale.input <span class="dim">→</span> deliver.input
+└── <span class="teal">svc-upscale/</span>                    <span class="dim"># a PRIMITIVE container, bundled as a dependency</span>
+    └── <span class="teal">hydra.yaml</span>  <span class="dim"># kind: cli · command: upscale.exe · needs: {cores:2, ramMb:4096}</span>
+    </div>
+    <div class="grid2">
+      <div class="card reveal"><h4>🧩 Primitive</h4><p>One exe or one endpoint. The leaf of the tree — sd.exe alone, a ComfyUI custom node alone. The unit the agent improves when a step fails.</p></div>
+      <div class="card reveal d1"><h4>🪜 Composite</h4><p>Named steps with explicit data flow. One <span class="mono">reqId</span> per pipeline run, <b>one verdict per step</b> — the improvement loop is scoped: when upscale fails, the agent patches <span class="mono">svc-upscale</span>, never the whole pipeline.</p></div>
+    </div>
+    <div class="note reveal"><b>ComfyUI is the living proof.</b> A workflow is already a graph of small custom nodes — the container spec simply standardizes that pattern and extends it to every kind of code. And every module keeps the Hydra module standard: <span class="hl">own directory · .d.ts contract · test() self-check</span> — so the catalog can verify a module before trusting it.</div>
+  </section>
+
+  <section>
+    <div class="sec-head reveal"><div class="sec-kicker">The loop</div><h2>Lifecycle — created by Hermes, improved by failure</h2>
+      <p>Containers are <b>authored by the network's Hermes</b> (the agent attached to Hydra — a requirement, not an option). The supervised-install pipeline already writes blueprints and verdicts; this formalizes its output.</p></div>
+    <div class="flow reveal">
+      <div class="step agent"><span class="num">1</span><b>Agent installs</b><span>Hermes installs code on a node → the output IS a container v1.0</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><span class="num">2</span><b>Cataloged</b><span>manifest → registry entry; visible per permissions</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><span class="num">3</span><b>Runs</b><span>scheduler gates, runner executes, broker relays — unchanged</span></div>
+      <div class="arrow">→</div>
+      <div class="step fail"><span class="num">4</span><b>Fails</b><span>exit code, verdict taxonomy, health check, user report</span></div>
+      <div class="arrow">→</div>
+      <div class="step agent"><span class="num">5</span><b>Agent improves</b><span>patches flags/hooks/template → v1.1 with history entry</span></div>
+    </div>
+    <div class="note reveal"><b>The improvement chain is the memory.</b> <span class="mono">history[]</span> records every failure→fix pair: <span class="hl">v1.0 "OOM at 1024²" → v1.1 needs.ramMb 16384 · v1.1 "black images" → v1.2 cfg default 7.0</span>. A container is a service that remembers how it learned to work — on this machine, and on the next one that installs it.</div>
+  </section>
+
+  <section>
+    <div class="sec-head reveal"><div class="sec-kicker">Who may do what</div><h2>Permissions — created by client, server, or other client</h2>
+      <p>Creation is not server-only. <b>Any node can author or install a container</b> — the owner client's policy decides what lands and who may use it.</p></div>
+    <table class="tbl reveal">
+      <tr><th>action</th><th>who may</th><th>checked where</th></tr>
+      <tr><td><b>author</b> a container</td><td>the node's Hermes · local user · (server with permission)</td><td>client policy</td></tr>
+      <tr><td><b>install</b> on a node</td><td>local user always · server / other clients only if allowed</td><td>owner client policy (install permission)</td></tr>
+      <tr><td><b>run</b> locally</td><td>any permitted requester — local UI or MCP</td><td>existing scheduler gate</td></tr>
+      <tr><td><b>run remotely</b></td><td>any permitted requester → broker → owner</td><td>broker + owner's run policy</td></tr>
+      <tr><td><b>see fields</b></td><td>exposed only · hidden = agent/owner</td><td>manifest Layer B</td></tr>
+      <tr><td><b>improve</b></td><td>the network's Hermes · owner</td><td>versioned history, never silent</td></tr>
+    </table>
+    <p class="reveal" style="margin-top:14px">Distribution mirrors the ecosystem Hydra already trusts: <b>drop the folder, it appears</b> — locally via the container store, network-wide via catalog sync (the registry grows from "reported state" to "replicated directory").</p>
+  </section>
+
+  <section>
+    <div class="sec-head reveal"><div class="sec-kicker">Bridge</div><h2>What stays, what changes</h2></div>
+    <div class="grid3">
+      <div class="card reveal"><h4>✅ Stays</h4><p>registry (catalog) · broker (routing) · scheduler (gate) · runner · MCP tools · reqId protocol · the event bus. The runtime path is untouched — containers feed it better inputs.</p></div>
+      <div class="card reveal d1"><h4>🔁 Changes</h4><p>registry row → <b>manifest-derived, versioned</b> · known-good list → <b>container store</b> · defs get the two-layer field tree · library.json → seed of the store, not the whole story.</p></div>
+      <div class="card reveal d2"><h4>🌱 Grows</h4><p>install permission UI · template rendering (exposed→form) · failure→fix history view · catalog replication · payment hooks on top of the same reqId plumbing.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head reveal"><div class="sec-kicker">Roadmap</div><h2>From draft to door</h2></div>
+    <ul class="road reveal">
+      <li><b>v0.2 — manifest & authoring</b><p>hydra.yaml schema lands; the supervised-install orchestrator emits a container as its success artifact; registry reads defs from manifests (versioned).</p></li>
+      <li class="gold"><b>v0.5 — the two reference containers</b><p>sd.exe ships as the CLI flag-tree reference; ComfyUI ships as the API-template reference. Renderer shows exposed-only forms. First composite pipeline (sd → upscale) proves the module rule. First failure→fix history entries recorded live.</p></li>
+      <li class="gold"><b>v1.0 — the store & the loop</b><p>Container store (custom-node-style install UX), permissions UI, catalog replication across nodes, and the improvement loop running unattended: fail → patch → version → re-serve.</p></li>
+    </ul>
+    <div class="note reveal"><b>North star:</b> a service container is <b>the unit of value</b> in the marketplace — a verified, self-describing, self-improving piece of capability that any node can host. <span class="hl">The marketplace doesn't sell access to machines; it trades containers.</span></div>
+  </section>
+
+</div>
+<footer>
+  <p>Hydra Intelligence Network · Services v2 proposal · drafted by Hermes Agent with Sophion (Leaf)</p>
+  <p class="sig-line">"Everything is modular, API-first, and replaceable."</p>
+</footer>
+
+<script>
+// reveal on scroll
+const io = new IntersectionObserver((es) => {
+  es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+// starfield
+const cv = document.createElement('canvas');
+cv.style.cssText = 'position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5';
+document.body.prepend(cv);
+const ctx = cv.getContext('2d');
+let W, H, stars = [];
+function resize(){ W = cv.width = innerWidth; H = cv.height = innerHeight; stars = Array.from({length: 110}, () => ({ x: Math.random()*W, y: Math.random()*H, r: Math.random()*1.2+.2, p: Math.random()*Math.PI*2 })); }
+resize(); addEventListener('resize', resize);
+(function draw(){
+  ctx.clearRect(0,0,W,H);
+  for (const s of stars) { s.p += .012; const a = .35 + Math.sin(s.p)*.3; ctx.beginPath(); ctx.fillStyle = `rgba(180,210,255,${a})`; ctx.arc(s.x, s.y, s.r, 0, 7); ctx.fill(); }
+  requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>

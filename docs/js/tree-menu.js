@@ -36,6 +36,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     <iframe src="clients/jim.html" style="width:100%;height:70vh;border:1px solid #2c3e50;border-radius:12px;background:#070b14"></iframe>
                 `;
                 break;
+            case '/sub-sites/hydra-services':
+                content = `
+                    <h2>💧 Hydra — Services v2 Proposal</h2>
+                    <p style="margin:8px 0 14px">Service Containers: any code can be a service — authored by the network's Hermes, improved by failure.</p>
+                    <p style="margin-bottom:14px"><a href="projects/hydra_services_proposal.html" target="_blank" style="font-weight:600">↗ Open the proposal in a new tab</a></p>
+                    <iframe src="projects/hydra_services_proposal.html" style="width:100%;height:70vh;border:1px solid #2c3e50;border-radius:12px;background:#070b14"></iframe>
+                `;
+                break;
             case '/sub-sites/kate-mc':
                 content = `
                     <h2>🎤 Kate McGill</h2>
