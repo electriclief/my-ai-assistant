@@ -36,6 +36,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     <iframe src="clients/jim.html" style="width:100%;height:70vh;border:1px solid #2c3e50;border-radius:12px;background:#070b14"></iframe>
                 `;
                 break;
+            case '/sub-sites/jim-images':
+                content = `
+                    <h2>🖼️ Jim — Hydra Image Demo</h2>
+                    <p style="margin:8px 0 14px">Five custom pictures generated across the Hydra GPU network, lettered for Jim.</p>
+                    <p style="margin-bottom:14px"><a href="clients/jim_image_demo.html" target="_blank" style="font-weight:600">↗ Open the image demo in a new tab</a></p>
+                    <iframe src="clients/jim_image_demo.html" style="width:100%;height:70vh;border:1px solid #2c3e50;border-radius:12px;background:#070b14"></iframe>
+                `;
+                break;
             case '/sub-sites/hydra-mcp':
                 content = `
                     <h2>🛰️ Hydra — MCP Server Guide</h2>

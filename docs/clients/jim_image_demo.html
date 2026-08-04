@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jim's Gallery — Hydra Image Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --ink:#0d1117; --accent:#40a0f0; --gold:#e8c87a; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#070a10; color:#e8edf4; font-family:'Inter',sans-serif; overflow-x:hidden; }
+  canvas#stars { position:fixed; inset:0; z-index:0; pointer-events:none; }
+  .aurora { position:fixed; width:60vw; height:60vw; border-radius:50%; filter:blur(120px); opacity:.16; z-index:0; pointer-events:none; }
+  .a1 { background:#40a0f0; top:-20vw; left:-15vw; }
+  .a2 { background:#8a5cf6; bottom:-25vw; right:-15vw; }
+  .wrap { position:relative; z-index:1; max-width:1080px; margin:0 auto; padding:3rem 1.5rem 5rem; }
+  .eyebrow { display:inline-block; font-size:.72rem; letter-spacing:.22em; text-transform:uppercase; color:#9fb3c8; border:1px solid rgba(64,160,240,.4); border-radius:999px; padding:.4rem .95rem; margin-bottom:1.2rem; }
+  .eyebrow b { color:var(--gold); }
+  h1 { font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(2.6rem,6vw,4.4rem); line-height:1.05;
+       background:linear-gradient(120deg,#fff,#cfe6ff 55%,var(--accent)); -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:.8rem; }
+  .sub { color:#9fb3c8; font-size:1.05rem; max-width:640px; line-height:1.6; margin-bottom:2.4rem; }
+  .sub a { color:var(--accent); text-decoration:none; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:1.6rem; }
+  .card { background:rgba(255,255,255,.035); border:1px solid rgba(255,255,255,.09); border-radius:18px; overflow:hidden; transition:transform .25s ease, box-shadow .25s ease; }
+  .card:hover { transform:translateY(-4px); box-shadow:0 18px 50px rgba(0,0,0,.5); }
+  .card img { width:100%; display:block; aspect-ratio:1280/786; object-fit:cover; }
+  .meta { padding:1.1rem 1.2rem 1.3rem; }
+  .num { font-size:.68rem; letter-spacing:.2em; color:var(--gold); text-transform:uppercase; }
+  .card h3 { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:600; margin:.3rem 0 .35rem; }
+  .card p { color:#9fb3c8; font-size:.88rem; line-height:1.5; }
+  .btn { display:inline-flex; align-items:center; gap:.45rem; margin-top:.9rem; padding:.5rem 1rem; border-radius:999px;
+         border:1px solid rgba(64,160,240,.5); color:#cfe6ff; font-size:.8rem; text-decoration:none; transition:all .2s; }
+  .btn:hover { background:rgba(64,160,240,.15); }
+  .note { margin-top:2.6rem; padding:1.4rem 1.6rem; border-radius:16px; background:rgba(64,160,240,.06); border:1px solid rgba(64,160,240,.22); font-size:.9rem; line-height:1.65; color:#b8c8dc; }
+  .note b { color:#fff; }
+  .foot { margin-top:3rem; text-align:center; color:#5f7186; font-size:.8rem; }
+  .foot a { color:#8aa3bd; }
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<div class="aurora a1"></div><div class="aurora a2"></div>
+<div class="wrap">
+  <span class="eyebrow">✔ Demo · <b>Hydra Image Network</b> · generated for you</span>
+  <h1>Jim's Gallery</h1>
+  <p class="sub">Five pictures, made just for you — drawn by an AI image engine running on the <a href="https://electriclief.github.io/my-ai-assistant/hydra.html">Hydra decentralized GPU network</a>, then lettered by hand. Click any image to open it full-size, or download your copy. 🐋</p>
+  <div class="grid">
+    <div class="card">
+      <img src="../assets/jim/hydra_demo/workshop.jpg" alt="Jim's Workshop">
+      <div class="meta"><span class="num">01</span><h3>Jim's Workshop</h3><p>The whale on the bench — motherboards, 3D printers and golden hour.</p>
+      <a class="btn" href="../assets/jim/hydra_demo/workshop.jpg" download="jims_workshop.jpg">⬇ Download</a></div>
+    </div>
+    <div class="card">
+      <img src="../assets/jim/hydra_demo/wellandport.jpg" alt="Wellandport, Ontario">
+      <div class="meta"><span class="num">02</span><h3>Wellandport, Ontario</h3><p>Home of the whale — autumn by the Welland River.</p>
+      <a class="btn" href="../assets/jim/hydra_demo/wellandport.jpg" download="wellandport_ontario.jpg">⬇ Download</a></div>
+    </div>
+    <div class="card">
+      <img src="../assets/jim/hydra_demo/the_hunt.jpg" alt="The Hunt">
+      <div class="meta"><span class="num">03</span><h3>The Hunt</h3><p>GPUs, marketplace, treasure — the daily marketplace sweep, whale-style.</p>
+      <a class="btn" href="../assets/jim/hydra_demo/the_hunt.jpg" download="the_hunt.jpg">⬇ Download</a></div>
+    </div>
+    <div class="card">
+      <img src="../assets/jim/hydra_demo/the_pilot.jpg" alt="Road Trip Ready">
+      <div class="meta"><span class="num">04</span><h3>Road Trip Ready</h3><p>The 2013 Pilot at golden hour, tank full and whale at the wheel.</p>
+      <a class="btn" href="../assets/jim/hydra_demo/the_pilot.jpg" download="road_trip_ready.jpg">⬇ Download</a></div>
+    </div>
+    <div class="card">
+      <img src="../assets/jim/hydra_demo/printed_in_ontario.jpg" alt="Printed in Ontario">
+      <div class="meta"><span class="num">05</span><h3>Printed in Ontario</h3><p>Gas caps, brackets and good vibes — fresh off the printer bed.</p>
+      <a class="btn" href="../assets/jim/hydra_demo/printed_in_ontario.jpg" download="printed_in_ontario.jpg">⬇ Download</a></div>
+    </div>
+  </div>
+  <div class="note">
+    <b>How these were made:</b> your assistant sent five prompts across the Hydra network — a peer-to-peer marketplace where GPU owners rent out their machines. A remote node with an AMD Radeon RX 6800 picked up the jobs and rendered each picture, and the finished art landed back on this page. Text was lettered on top so every word is crisp. Want more — different themes, sizes, or something for Judy? Just ask. 🐋
+  </div>
+  <div class="foot"><a href="jim.html">← Back to your studio page</a></div>
+</div>
+<script>
+(function(){var c=document.getElementById('stars'),x=c.getContext('2d'),w,h,n=140,p=[];
+function r(){w=c.width=innerWidth;h=c.height=innerHeight;for(var i=0;i<n;i++){p[i]={x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.2+.3,s:Math.random()*.4+.1};}}
+function t(){x.clearRect(0,0,w,h);for(var i=0;i<n;i++){var s=p[i];x.beginPath();x.arc(s.x,s.y,s.r,0,7);x.fillStyle='rgba(200,220,255,.5)';x.fill();s.y-=s.s;if(s.y<0)s.y=h;}requestAnimationFrame(t);}
+addEventListener('resize',r);r();t();})();
+</script>
+</body>
+</html>
