@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hydra MCP Server — Capability Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060a13; --panel:rgba(17,26,44,.75); --panel2:rgba(11,17,30,.92);
+  --bd:rgba(120,160,255,.14); --bd2:rgba(64,224,208,.35);
+  --tx:#e8edf7; --dim:#93a1bd; --dim2:#5f6f8c;
+  --blue:#40a0f0; --blue2:#7cc4ff; --gold:#f0c040; --teal:#40e0d0; --green:#40f0a0; --red:#f07070;
+  --shadow:0 24px 70px rgba(0,0,0,.5);
+  --serif:"Cormorant Garamond",Georgia,serif; --sans:"Inter",system-ui,-apple-system,sans-serif; --mono:"JetBrains Mono",Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(64,224,208,.3)}
+.orb{position:fixed;border-radius:50%;filter:blur(120px);z-index:0;pointer-events:none;opacity:.4}
+.orb.blue{width:52vw;height:52vw;background:radial-gradient(circle,rgba(64,160,240,.22),transparent 65%);top:-16vw;left:-12vw;animation:drift1 28s ease-in-out infinite}
+.orb.teal{width:42vw;height:42vw;background:radial-gradient(circle,rgba(64,224,208,.13),transparent 65%);bottom:-14vw;right:-8vw;animation:drift2 34s ease-in-out infinite}
+.orb.gold{width:28vw;height:28vw;background:radial-gradient(circle,rgba(240,192,64,.09),transparent 65%);top:38vh;left:52vw;animation:drift3 40s ease-in-out infinite}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(5vw,4vh) scale(1.1)}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-4vw,-4vh) scale(1.06)}}
+@keyframes drift3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(3vw,-5vh) scale(1.15)}}
+.wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:0 24px}
+nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0}
+.brand{display:flex;align-items:center;gap:12px;font-weight:600;letter-spacing:.4px}
+.brand .mark{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:20px;background:linear-gradient(135deg,rgba(64,160,240,.22),rgba(64,224,208,.16));border:1px solid var(--bd)}
+.brand small{display:block;font-size:10.5px;letter-spacing:2.6px;color:var(--dim2);text-transform:uppercase;font-weight:500}
+.brand a{color:var(--tx);text-decoration:none}
+nav .back{font-size:12px;color:var(--dim);text-decoration:none;border:1px solid var(--bd);padding:8px 16px;border-radius:100px;transition:all .25s}
+nav .back:hover{color:var(--teal);border-color:var(--bd2)}
+.hero{padding:60px 0 26px;text-align:center}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;padding:7px 18px;border-radius:100px;background:rgba(64,224,208,.08);border:1px solid rgba(64,224,208,.28);color:var(--teal);font-size:11.5px;letter-spacing:2.8px;text-transform:uppercase;font-weight:600;margin-bottom:26px}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(38px,6vw,64px);line-height:1.05}
+.hero h1 .grad{background:linear-gradient(100deg,#fff 8%,var(--blue2) 40%,var(--teal) 75%,var(--gold) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero .sub{max-width:720px;margin:16px auto 0;color:var(--dim);font-size:15.5px;font-weight:300}
+.hero .sub strong{color:var(--tx);font-weight:600}
+.hero .mono{font-family:var(--mono);font-size:13px;color:var(--teal)}
+.stat-row{display:flex;gap:12px;justify-content:center;margin-top:30px;flex-wrap:wrap}
+.stat{background:var(--panel);border:1px solid var(--bd);border-radius:16px;padding:13px 24px;text-align:center;backdrop-filter:blur(10px);min-width:110px}
+.stat b{display:block;font-size:23px;font-family:var(--serif);color:var(--teal)}
+.stat span{font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--dim2)}
+.stat b.gold{color:var(--gold)}.stat b.blue{color:var(--blue2)}.stat b.green{color:var(--green)}
+section{padding:52px 0 6px}
+.sec-head{margin-bottom:28px}
+.sec-kicker{font-size:11px;letter-spacing:3.4px;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:12px}
+.sec-head h2{font-family:var(--serif);font-weight:500;font-size:clamp(26px,3.8vw,36px)}
+.sec-head p{color:var(--dim);font-weight:300;font-size:14.5px;margin-top:10px;max-width:780px}
+.sec-head p b{color:var(--tx);font-weight:600}
+p{font-size:14.5px;font-weight:300;color:#c6d2e8}
+p b{color:var(--tx);font-weight:600}
+.mono{font-family:var(--mono);font-size:12.5px;color:var(--teal)}
+h3{font-family:var(--serif);font-weight:500;font-size:21px;margin:26px 0 10px}
+.answer{background:linear-gradient(135deg,rgba(64,160,240,.10),rgba(64,224,208,.07));border:1px solid var(--bd2);border-radius:18px;padding:22px 26px;margin-top:26px;backdrop-filter:blur(10px)}
+.answer b{color:var(--teal);font-family:var(--serif);font-size:17px;display:block;margin-bottom:6px}
+.answer p{font-size:13.5px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:var(--panel);border:1px solid var(--bd);border-radius:18px;padding:20px 22px;backdrop-filter:blur(10px)}
+.card h4{font-size:13.5px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card p{font-size:12.8px;color:var(--dim);font-weight:300}
+.card .tag{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:100px;font-weight:700;margin-left:auto}
+.tag.can{background:rgba(64,240,160,.1);color:var(--green);border:1px solid rgba(64,240,160,.3)}
+.tag.cant{background:rgba(240,112,112,.1);color:var(--red);border:1px solid rgba(240,112,112,.3)}
+.tag.info{background:rgba(64,160,240,.1);color:var(--blue2);border:1px solid rgba(64,160,240,.25)}
+.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:14px 0}
+.tbl th{text-align:left;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--dim2);font-weight:700;padding:10px 14px;border-bottom:1px solid var(--bd)}
+.tbl td{padding:11px 14px;border-bottom:1px solid rgba(120,160,255,.08);color:var(--dim);font-weight:300;vertical-align:top}
+.tbl td b{color:var(--tx);font-weight:600}
+.tbl td .mono{font-size:12px}
+pre{background:var(--panel2);border:1px solid var(--bd);border-radius:14px;padding:18px 20px;font-family:var(--mono);font-size:12.3px;line-height:1.6;overflow-x:auto;color:#c9d6ec;margin:12px 0}
+pre .c{color:var(--dim2)}pre .k{color:var(--teal)}pre .s{color:var(--gold)}pre .n{color:var(--blue2)}pre .g{color:var(--green)}
+.diagram{background:var(--panel2);border:1px solid var(--bd);border-radius:14px;padding:20px 24px;font-family:var(--mono);font-size:12.6px;line-height:1.8;color:#c9d6ec;overflow-x:auto;margin:14px 0}
+.diagram .dim{color:var(--dim2)}.diagram .teal{color:var(--teal)}.diagram .gold{color:var(--gold)}.diagram .blue{color:var(--blue2)}.diagram .green{color:var(--green)}.diagram .red{color:var(--red)}
+.note{background:var(--panel);border:1px solid var(--bd);border-radius:18px;padding:22px 26px;margin-top:18px;font-size:13px;color:var(--dim);font-weight:300;backdrop-filter:blur(10px)}
+.note b{color:var(--tx)}
+.note .hl{color:var(--teal);font-weight:600}
+footer{border-top:1px solid var(--bd);padding:34px 0 46px;text-align:center;position:relative;z-index:1;margin-top:60px}
+footer p{font-size:12.5px;color:var(--dim2);font-weight:300}
+footer .sig-line{font-family:var(--serif);font-style:italic;color:var(--dim);font-size:14px;margin-top:6px}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:760px){.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="orb blue"></div><div class="orb teal"></div><div class="orb gold"></div>
+<div class="wrap">
+  <nav>
+    <div class="brand">
+      <div class="mark">💧</div>
+      <div><a href="https://github.com/electriclief" target="_blank" style="color:inherit">Hydra<span style="color:var(--dim2);font-weight:400"> · MCP Server Guide</span></a>
+        <small>What it can do · what it can't · how to reach it</small>
+      </div>
+    </div>
+    <a class="back" href="https://electriclief.github.io/my-ai-assistant/">← Hub</a>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow reveal">Reference guide · verified against source · 2026-08-04</div>
+    <h1 class="reveal d1">The Hydra <span class="grad">MCP Server</span></h1>
+    <p class="sub reveal d2">The agent runtime's <strong>hands on the network</strong> — eleven typed tools that turn any MCP host (Hermes) into a driver of every client machine. One server. One endpoint. Per-session instances under the hood.</p>
+    <div class="stat-row reveal d3">
+      <div class="stat"><b>1</b><span>MCP server</span></div>
+      <div class="stat"><b class="blue">11</b><span>Typed tools</span></div>
+      <div class="stat"><b class="green">/mcp</b><span>One endpoint</span></div>
+      <div class="stat"><b class="gold">3</b><span>Ways to call it</span></div>
+    </div>
+  </header>
+
+  <section>
+    <div class="sec-head reveal"><div class="sec-kicker">The short answer</div><h2>Is there just one?</h2>
+      <p>Asked plainly: <b>yes — one MCP server</b>, living in the Hydra server module <span class="mono">server/src/modules/mcp/</span>. It is served at a single endpoint, <span class="mono">/mcp</span> on the operator's port 8111. There is <b>no MCP server on the clients</b> — a client is a worker, not a host; its only local door is the tiny testapi (8123), which is an event trigger, not MCP.</p></div>
+    <div class="answer reveal"><b>One definition, per-session instances.</b>
+      <p>The module exposes one <span class="mono">createServer()</span> factory (server name <span class="mono">hydra</span>). Streamable HTTP means each connecting host gets its own <b>session instance</b> (a transport keyed by session id, swept after 5 minutes idle) — so many hosts can pair simultaneously without state bleeding between them. But every session runs the <b>same eleven tools</b>, wired to the <b>same modules</b>. It is one server wearing many session hats.</p></div>
+  </section>
+
+  <section>
+    <div class="sec-head reveal"><div class="sec-kicker">Architecture</div><h2>Where it sits in the network</h2></div>
+    <div class="diagram reveal">
+<span class="gold">MCP HOST (Hermes agent)</span>                 <span class="dim">— paired: hermes mcp add hydra</span>
+     │  streamable HTTP (session id per host)
+     ▼
+<span class="teal">/mcp  ·  server :8111  ·  createServer() → 11 tools</span>
+     │
+     ├── clients.list ──────▶ <span class="blue">clients module</span>   <span class="dim">(registry: MAC identity, resources)</span>
+     ├── client.exec ───────▶ <span class="blue">commands module</span>  <span class="dim">(dispatch → WS → any client's shell)</span>
+     ├── client.kill ───────▶ <span class="blue">commands module</span>  <span class="dim">(process-tree kill via taskkill /T /F)</span>
+     ├── client.resources ──▶ <span class="blue">clients module</span>   <span class="dim">(waits for a FRESH manifest over WS)</span>
+     ├── client.review ─────▶ <span class="blue">review module</span>    <span class="dim">(deny-safe: THE one agent judges first)</span>
+     ├── sessions.get/wait ─▶ <span class="blue">sessions module</span>  <span class="dim">(streamed output, exit codes, replay)</span>
+     └── services.* ────────▶ <span class="blue">services module</span>  <span class="dim">(registry + broker: request/status/cancel)</span>
+                              <span class="dim">        │</span>
+                              <span class="dim">        ▼  relays service.run / output / done over WS</span>
+                              <span class="gold">THE ONE AGENT</span> <span class="dim">(settings.json → 123:8642) ← review + chat only</span>
+    </div>
+    <p class="reveal">Everything below the tools is the same machinery the operator console and the API use — <b>the MCP server is a skin over modules, never a parallel implementation</b>.</p>
+  </section>
+
+  <section>
+    <div class="sec-head reveal"><div class="sec-kicker">The tools</div><h2>All eleven, exactly as registered</h2>
+      <p>Each tool is a typed contract (zod input schema, description) — an agent reads the schema and knows precisely what to send.</p></div>
+    <table class="tbl reveal">
+      <tr><th>tool</th><th>what it does</th><th>shape</th></tr>
+      <tr><td><b>clients.list</b></td><td>Every connected client: identity, version, IP, online status, fresh resource manifest (CPU/RAM/GPU/disk).</td><td class="mono">() → snapshot</td></tr>
+      <tr><td><b>client.exec</b></td><td>Run a shell command on any client (powershell or cmd). Returns a session id — output streams to sessions.get.</td><td class="mono">(clientId, command, shell?)</td></tr>
+      <tr><td><b>client.kill</b></td><td>Terminate a running command on a client — process tree (taskkill /T /F).</td><td class="mono">(clientId, sessionId)</td></tr>
+      <tr><td><b>client.resources</b></td><td>Ask a client for a <b>fresh</b> manifest — never a cached boot snapshot. The gate's source of truth.</td><td class="mono">(clientId)</td></tr>
+      <tr><td><b>client.review</b></td><td>Hermes reviews a command line by line <b>before</b> it runs. Deny-safe: any failure = no approval.</td><td class="mono">(clientId, command, intent?)</td></tr>
+      <tr><td><b>sessions.get</b></td><td>One session: command, streamed stdout/stderr, exit code, duration. History replays.</td><td class="mono">(sessionId)</td></tr>
+      <tr><td><b>sessions.wait</b></td><td>Poll a session until it finishes (or timeout). The polite way to wait for a door command.</td><td class="mono">(sessionId, timeoutMs?)</td></tr>
+      <tr><td><b>services.list</b></td><td>Every service on every client with live status (idle/queued/running/ok/error) + pending request count.</td><td class="mono">() → clients[]</td></tr>
+      <tr><td><b>services.request</b></td><td>Ask ANY client to run a service owned by another client — the broker relays it. Params fill <span class="mono">{{field}}</span> in the owner's command.</td><td class="mono">(name, owner, params?)</td></tr>
+      <tr><td><b>services.status</b></td><td>Poll one request: human step detail, buffered output (last 100 lines), verdict once done.</td><td class="mono">(reqId)</td></tr>
+      <tr><td><b>services.cancel</b></td><td>Kill a remote job — relayed to the owner, process tree terminated.</td><td class="mono">(reqId)</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <div class="sec-head reveal"><div class="sec-kicker">Capabilities</div><h2>What it can do</h2></div>
+    <div class="grid2">
+      <div class="card reveal"><h4>🚪 The door <span class="tag can">CAN</span></h4><p>Drive any client machine like SSH — no SSH, no RDP, no credentials. Running the client app IS opening the door. Verified live: the entire 123 box was driven through this door (found hermes, enabled api_server, killed a broken discord platform, LAN-bound 8642, launched the gateway).</p></div>
+      <div class="card reveal d1"><h4>🛡️ Review-first guardrail <span class="tag can">CAN</span></h4><p>client.review routes a command to the ONE configured agent for line-by-line judgement before execution. Any failure, timeout, or malformed verdict = <b>no approval</b>. A live test rejected <span class="mono">Remove-Item System32</span>.</p></div>
+      <div class="card reveal"><h4>📦 Services end-to-end <span class="tag can">CAN</span></h4><p>Human → Agent → GPU Worker → Verified Result: request a service on any node, watch human-step status, streamed output, and the verdict. Echo, Vision, LLMServer, and now <b>sd-cli</b> (Krea-2-Turbo image generation) ride this path.</p></div>
+      <div class="card reveal d1"><h4>📊 Fresh truth <span class="tag can">CAN</span></h4><p>Resources are never cached across boot — client.resources forces a fresh collect, so the scheduler gate can never starve on a stale manifest. Sessions are replayable history, not fire-and-forget.</p></div>
+      <div class="card reveal"><h4>🔁 Kill on demand <span class="tag can">CAN</span></h4><p>client.kill terminates the whole process tree of a runaway command; services.cancel does the same for a remote job. The operator never waits for a hang to time out.</p></div>
+      <div class="card reveal d1"><h4>🧩 Self-describing <span class="tag can">CAN</span></h4><p>Every tool ships a description + input schema — any MCP-capable agent discovers the surface by reading it, no documentation ritual needed. The MCP host pairs once: <span class="mono">hermes mcp add hydra</span>.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head reveal"><div class="sec-kicker">Limits</div><h2>What it can't do</h2>
+      <p>Honest boundaries — some are design choices, some are on the roadmap, some are waiting for a decision.</p></div>
+    <table class="tbl reveal">
+      <tr><th>can't</th><th>why / status</th></tr>
+      <tr><td><b>Transfer files</b></td><td>No file-download channel exists. The only push is the update exe swap. <span class="mono">Proposed: one-time token + HTTP pull + hash verify</span> — pending.</td></tr>
+      <tr><td><b>Register services</b></td><td>Services enter via the client's known-good settings (edited at the machine or through the door) — there is no <span class="mono">services.register</span> tool yet.</td></tr>
+      <tr><td><b>Authenticate callers</b></td><td>No auth on /mcp. Running the server + LAN reachability = trust. A token slot is reserved for later.</td></tr>
+      <tr><td><b>Push events to the host</b></td><td>MCP is request/response. Live events relay over the internal WS (UI/requester paths); an MCP host must poll sessions/services.status.</td></tr>
+      <tr><td><b>Think with more than one agent</b></td><td>Review and chat go to exactly ONE agent (settings.json → 123:8642). No fallback ladder by design.</td></tr>
+      <tr><td><b>Pay or rank anyone</b></td><td>No reputation/payment — reqId + requester identity ride every request as the seed, but settlement is latent.</td></tr>
+      <tr><td><b>Directly control GPUs/models</b></td><td>No hardware tool — that's what services are for (LLMServer wraps llama.cpp). The MCP server orchestrates; it doesn't micromanage.</td></tr>
+      <tr><td><b>Survive a server crash mid-request</b></td><td>Pending/recent state is in-memory; a server restart forgets in-flight jobs (the JSONL log remembers what happened, not what was pending).</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <div class="sec-head reveal"><div class="sec-kicker">Reaching it</div><h2>Three ways in</h2></div>
+    <pre class="reveal"><span class="c"># 1 — the pair (Hermes as host, the intended path)</span>
+hermes mcp add hydra --url http://&lt;server&gt;:8111/mcp
+
+<span class="c"># 2 — the back door (raw MCP client from the shell)</span>
+node scripts/mcp-call.cjs clients.list
+node scripts/mcp-call.cjs services.request '{"name":"sd-cli","owner":"hydra-2a466f0439c8","params":{"prompt":"a red apple"}}'
+
+<span class="c"># 3 — the native wrapper (Hermes tools, as this agent uses them)</span>
+<span class="g">mcp__hydra__clients_list · client_exec · sessions_wait · services_request · ...</span>
+
+<span class="c"># endpoint facts</span>
+<span class="k">URL</span>     http://192.168.1.100:8111/mcp   <span class="c">(streamable HTTP; session id per host)</span>
+<span class="k">SERVER</span>  name 'hydra' · version = config.version
+<span class="k">SESSIONS</span> transport map, 5-minute idle sweep · multiple hosts can pair at once</pre>
+  </section>
+
+  <section>
+    <div class="sec-head reveal"><div class="sec-kicker">Trust model</div><h2>Why it's safe enough</h2></div>
+    <div class="note reveal"><b>The door is the consent.</b> Running the client app = opening the door; the server never forces a door open. The review channel is the tripwire for anything dangerous. Clients survive server crashes (backoff reconnect). The MCP surface is typed, so an agent can't invent a tool — it can only use the eleven. <span class="hl">The riskiest thing in the network is a hostile MCP host reaching an open door — mitigated today by LAN trust, tomorrow by the reserved token slot.</span></div>
+  </section>
+
+</div>
+<footer>
+  <p>Hydra Intelligence Network · MCP Server capability guide · facts verified against server/src on 2026-08-04</p>
+  <p class="sig-line">"Everything is modular, API-first, and replaceable."</p>
+</footer>
+
+<script>
+const io = new IntersectionObserver((es) => {
+  es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+const cv = document.createElement('canvas');
+cv.style.cssText = 'position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5';
+document.body.prepend(cv);
+const ctx = cv.getContext('2d');
+let W, H, stars = [];
+function resize(){ W = cv.width = innerWidth; H = cv.height = innerHeight; stars = Array.from({length: 110}, () => ({ x: Math.random()*W, y: Math.random()*H, r: Math.random()*1.2+.2, p: Math.random()*Math.PI*2 })); }
+resize(); addEventListener('resize', resize);
+(function draw(){
+  ctx.clearRect(0,0,W,H);
+  for (const s of stars) { s.p += .012; const a = .35 + Math.sin(s.p)*.3; ctx.beginPath(); ctx.fillStyle = `rgba(180,210,255,${a})`; ctx.arc(s.x, s.y, s.r, 0, 7); ctx.fill(); }
+  requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>

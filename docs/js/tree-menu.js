@@ -36,6 +36,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     <iframe src="clients/jim.html" style="width:100%;height:70vh;border:1px solid #2c3e50;border-radius:12px;background:#070b14"></iframe>
                 `;
                 break;
+            case '/sub-sites/hydra-mcp':
+                content = `
+                    <h2>🛰️ Hydra — MCP Server Guide</h2>
+                    <p style="margin:8px 0 14px">One server, eleven tools: what the Hydra MCP server can do, what it can't, and how to reach it.</p>
+                    <p style="margin-bottom:14px"><a href="projects/hydra_mcp_guide.html" target="_blank" style="font-weight:600">↗ Open the guide in a new tab</a></p>
+                    <iframe src="projects/hydra_mcp_guide.html" style="width:100%;height:70vh;border:1px solid #2c3e50;border-radius:12px;background:#070b14"></iframe>
+                `;
+                break;
             case '/sub-sites/hydra-services':
                 content = `
                     <h2>💧 Hydra — Services v2 Proposal</h2>
