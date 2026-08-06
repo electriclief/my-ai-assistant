@@ -44,6 +44,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     <iframe src="clients/jim_image_demo.html" style="width:100%;height:70vh;border:1px solid #2c3e50;border-radius:12px;background:#070b14"></iframe>
                 `;
                 break;
+            case '/sub-sites/gpu-market':
+                content = `
+                    <h2>🖥️ Jim — GPU Deal Board</h2>
+                    <p style="margin:8px 0 14px">Daily Facebook Marketplace GPU watch for Jim: new finds, price drops, and a "not interested" that sticks (localStorage).</p>
+                    <p style="margin-bottom:14px"><a href="clients/jim_gpu_board.html" target="_blank" style="font-weight:600">↗ Open the GPU board in a new tab</a></p>
+                    <iframe src="clients/jim_gpu_board.html" style="width:100%;height:70vh;border:1px solid #2c3e50;border-radius:12px;background:#060a13"></iframe>
+                `;
+                break;
             case '/sub-sites/hydra-mcp':
                 content = `
                     <h2>🛰️ Hydra — MCP Server Guide</h2>
